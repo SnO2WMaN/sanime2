@@ -5,8 +5,14 @@ includes = ["*.nix"]
 [formatter.dprint]
 command = "dprint"
 options = ["fmt"]
-includes = ["*.json", "*.toml", "*.md"]
-
-[formatter.satysfi-fmt]
-command = "satysfi-fmt-each"
-includes = ["*.saty", "*.satyh"]
+includes = [
+  "*.json",
+  "*.toml",
+  "*.md",
+  "*.js",
+  "*.jsx",
+  "*.ts",
+  "*.tsx",
+  "*.cjs",
+  "*.mjs",
+]
