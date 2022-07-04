@@ -1,0 +1,6 @@
+.env
+.direnv
+result/
+
+# VSCode
+*.code-workspace

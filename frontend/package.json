@@ -6,7 +6,7 @@
     "build": "vite build",
     "lint": "run-s lint:eslint",
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "lintfix:eslint": "pnpm run lint:eslint --fix --cache"
+    "lintfix:eslint": "npm run lint:eslint --fix --cache"
   },
   "dependencies": {
     "react": "^18.2.0",
