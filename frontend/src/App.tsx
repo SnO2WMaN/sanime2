@@ -1,9 +1,17 @@
+import ky from "ky";
 import React from "react";
+import { SWRConfig } from "swr";
+
+import { Page as ShowPage } from "./pages/Show";
 
 export const App: React.FC = () => {
   return (
-    <>
-      <p>Wow</p>
-    </>
+    <SWRConfig
+      value={{
+        fetcher: (res, init) => ky.get(res, init).then((res) => res.json()),
+      }}
+    >
+      <ShowPage />
+    </SWRConfig>
   );
 };
