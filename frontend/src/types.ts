@@ -47,3 +47,8 @@ export interface UserAnimeStatus {
   avatarUrl?: string;
   works: AnimeStatus[];
 }
+
+export type APIResponse = {
+  users: UserAnimeStatus[];
+  animes: Record<ServiceID, AnimeInfo>;
+};

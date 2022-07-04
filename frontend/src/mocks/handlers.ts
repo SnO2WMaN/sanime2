@@ -1,9 +1,9 @@
 import { rest } from "msw";
 
-import { AnimeInfo, ServiceID, UserAnimeStatus } from "~/types";
+import { AnimeInfo, APIResponse, ServiceID, UserAnimeStatus } from "~/types";
 
 export const handlers = [
-  rest.get("/api/shows", (req, res, ctx) => {
+  rest.get<APIResponse>("/api/shows", (req, res, ctx) => {
     const users: UserAnimeStatus[] = [
       {
         id: "anilist:sno2wman",
