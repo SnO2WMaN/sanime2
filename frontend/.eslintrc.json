@@ -22,6 +22,7 @@
     "prefer-template": 2,
     "no-useless-rename": [2],
     "object-shorthand": [2, "always"],
+    "quote-props": [2, "consistent-as-needed"],
     /* unused-imports */
     "unused-imports/no-unused-imports": [2],
     /* simple-import-sort */
