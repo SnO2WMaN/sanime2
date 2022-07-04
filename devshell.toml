@@ -1,7 +1,7 @@
 [devshell]
 packages = [
-  "alejandra", 
-  "dprint", 
+  "alejandra",
+  "dprint",
   "nodejs-18_x",
   "nodePackages.pnpm",
 ]

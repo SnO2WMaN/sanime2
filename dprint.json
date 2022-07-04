@@ -2,16 +2,17 @@
   "lineWidth": 120,
   "useTabs": false,
   "indentWidth": 2,
-  "typescript": {},
-  "json": {
-    "associations": [
-      "**/*.code-workspace"
-    ]
+  "typescript": {
   },
-  "markdown": {},
-  "toml": {},
+  "json": {
+  },
+  "markdown": {
+  },
+  "toml": {
+  },
   "includes": [
-    "**/*.{ts,tsx,js,jsx,cjs,mjs,json,code-workspace,md,toml}"
+    "**/*.{ts,tsx,js,jsx,cjs,mjs}",
+    "**/*.{json,md,toml}"
   ],
   "excludes": [
     "**/.direnv",
