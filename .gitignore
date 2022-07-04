@@ -1,3 +1,15 @@
 .env
 .direnv
 result/
+
+# dependency
+node_modules/
+
+# dist
+dist/
+
+# cache
+.eslintcache
+
+# log
+.pnpm-debug.log
