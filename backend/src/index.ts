@@ -1,4 +1,6 @@
-import { App } from "piyo";
+import cors from "@koa/cors";
+import Router from "@koa/router";
+import Koa from "koa";
 
 import { fetchAniListAnimes } from "./fetchers/animes/anilist.js";
 import { fetchAnnictAnimes } from "./fetchers/animes/annict.js";
@@ -7,12 +9,13 @@ import { fetchAnnictWatches } from "./fetchers/watchlists/annict.js";
 import { AnimeInfo, malIdIfPossible, ServiceID } from "./type.js";
 import { isNotNull } from "./utils/is-not-null.js";
 
-const app = new App();
+const app = new Koa();
+const router = new Router();
 
 export const isValidAnilistId = (id: string) => /anilist:[a-zA-Z0-9_-]{1,50}/.test(id);
 export const isValidAnnictId = (id: string) => /annict:[a-zA-Z0-9_-]{1,50}/.test(id);
 
-app.get("/api/show", async ctx => {
+router.get("/api/shows", async ctx => {
   let userIds = ctx.query.users;
   if (!userIds) {
     ctx.status = 400;
@@ -138,6 +141,11 @@ app.get("/api/show", async ctx => {
     animes: Object.fromEntries(worksMap.entries()),
   };
 });
+
+app
+  .use(cors())
+  .use(router.routes())
+  .use(router.allowedMethods());
 
 app.listen(4000, () => {
   console.log("Listen on http://localhost:4000");
