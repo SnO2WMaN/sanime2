@@ -1,6 +1,7 @@
 {
   "name": "@sanime2/backend",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "ts-node-dev ./src/index.ts",
     "build": "tsc"
@@ -9,10 +10,13 @@
     "got": "^12.1.0",
     "ioredis": "^5.1.0",
     "koa-static": "^5.0.0",
-    "piyo": "^1.1.0"
+    "ky": "^0.31.0",
+    "piyo": "^1.1.0",
+    "zod": "^3.17.3"
   },
   "devDependencies": {
     "@tsconfig/node18": "1.0.1",
+    "@types/node": "^18.0.1",
     "@typescript-eslint/eslint-plugin": "5.30.4",
     "@typescript-eslint/parser": "5.30.4",
     "eslint": "8.19.0",
