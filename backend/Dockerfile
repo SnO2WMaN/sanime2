@@ -24,6 +24,7 @@ FROM gcr.io/distroless/nodejs:18
 
 EXPOSE 4000
 
+COPY package.json ./
 COPY --from=builder /app/dist ./dist
 COPY --from=deps /app/node_modules ./node_modules
 
