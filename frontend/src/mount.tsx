@@ -4,7 +4,10 @@ import { createRoot } from "react-dom/client";
 import { App } from "./App";
 
 // MSW (develop)
-if (import.meta.env.DEV) {
+if (
+  import.meta.env.DEV
+  && import.meta.env.VITE_ENABLE_MSW === "true"
+) {
   const { worker } = await import("./mocks/browsers");
   await worker.start();
 }

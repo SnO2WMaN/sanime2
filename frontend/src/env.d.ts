@@ -1,7 +1,8 @@
 /// <reference types="vite/client" />
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ImportMetaEnv {
+  VITE_API_ENDPOINT?: string;
+  VITE_ENABLE_MSW?: "true";
 }
 
 interface ImportMeta {
