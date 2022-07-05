@@ -4,7 +4,10 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc && tsc-alias"
+    "build": "tsc"
+  },
+  "engines": {
+    "node": "^18"
   },
   "dependencies": {
     "got": "^12.1.0",
