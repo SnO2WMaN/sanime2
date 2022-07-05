@@ -1,8 +1,9 @@
 import ky from "ky";
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import { SWRConfig } from "swr";
 
-import { Page as ShowPage } from "./pages/Show";
+import { Page as IndexPage } from "./pages/Index";
 
 export const App: React.FC = () => {
   return (
@@ -11,7 +12,9 @@ export const App: React.FC = () => {
         fetcher: (res, init) => ky.get(res, { ...init, timeout: 15000 }).then((res) => res.json()),
       }}
     >
-      <ShowPage />
+      <BrowserRouter>
+        <IndexPage />
+      </BrowserRouter>
     </SWRConfig>
   );
 };

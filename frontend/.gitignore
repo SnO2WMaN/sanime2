@@ -7,3 +7,6 @@ result/
 
 # msw
 public/mockServiceWorker.js
+
+# env for vite
+.env.*.local
