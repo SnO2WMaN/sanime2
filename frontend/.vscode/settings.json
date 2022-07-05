@@ -3,5 +3,8 @@
   "files.exclude": {
     "node_modules": true,
     "dist": true
+  },
+  "files.associations": {
+    ".env.*": "env"
   }
 }

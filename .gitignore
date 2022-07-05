@@ -13,3 +13,6 @@ dist/
 
 # log
 .pnpm-debug.log
+
+# VSCode
+*.code-workspace
