@@ -3,6 +3,7 @@ import React from "react";
 
 import { AnimeIcon } from "~/components/AnimeIcon";
 import { AnimeSeason, AnimeType } from "~/types";
+import { urlAnilist, urlAnnict, urlMyAnimeList } from "~/utils/idToUrl";
 
 export const Thumbnail: React.FC<{ className?: string; src: string }> = ({ className, src }) => {
   return (
@@ -86,7 +87,7 @@ export const AnimeComponent: React.FC<{
                   ["underline"],
                   ["text-blue-500", "visited:text-violet-500"],
                 )}
-                href={`https://annict.com/works/${idAnnict}`}
+                href={urlAnnict(idAnnict)}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -102,7 +103,7 @@ export const AnimeComponent: React.FC<{
                   ["underline"],
                   ["text-blue-500", "visited:text-violet-500"],
                 )}
-                href={`https://anilist.co/anime/${idAniList}`}
+                href={urlAnilist(idAniList)}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -118,7 +119,7 @@ export const AnimeComponent: React.FC<{
                   ["underline"],
                   ["text-blue-500", "visited:text-violet-500"],
                 )}
-                href={`https://myanimelist.net/anime/${idMal}`}
+                href={urlMyAnimeList(idMal)}
                 target="_blank"
                 rel="noreferrer"
               >
