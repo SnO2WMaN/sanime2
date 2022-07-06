@@ -13,14 +13,19 @@ export const isInclude = (
     sourceServiceID: ServiceID;
     myAnimeListID: number | undefined;
   }[],
-  pv: {
+  { idAniList, idAnnict, idMal }: {
     idAniList?: number;
     idAnnict?: number;
     idMal?: number;
   },
 ): boolean => {
   return p.findIndex(({ myAnimeListID, sourceServiceID }) => {
-    return myAnimeListID === pv.idMal;
+    if ((myAnimeListID && idMal) && idMal === myAnimeListID) return true;
+    const [prov, id] = sourceServiceID.split(":");
+    if (prov === "anilist" && !!idAniList) return parseInt(id, 10) === idAniList;
+    if (prov === "annict" && !!idAnnict) return parseInt(id, 10) === idAnnict;
+    if (prov === "mal" && !!idMal) return parseInt(id, 10) === idMal;
+    return false;
   }) != -1;
 };
 
