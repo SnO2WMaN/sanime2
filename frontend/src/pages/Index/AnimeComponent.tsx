@@ -1,17 +1,22 @@
 import clsx from "clsx";
 import React, { useMemo } from "react";
+import { useInView } from "react-intersection-observer";
 
 import { AnimeIcon } from "~/components/AnimeIcon";
 import { AnimeSeason, AnimeType, ServiceID } from "~/types";
 import { urlAnilist, urlAnnict, urlMyAnimeList } from "~/utils/idToUrl";
 
 export const Thumbnail: React.FC<{ className?: string; src: string }> = ({ className, src }) => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    rootMargin: "960px 0px",
+  });
+
   return (
-    <div className={clsx(className, "bg-gray-50")}>
+    <div className={clsx(className, "bg-gray-50")} ref={ref}>
       <img
         className={clsx(["mx-auto"], ["h-full"])}
-        src={src}
-        loading="lazy"
+        src={inView ? src : undefined}
       >
       </img>
     </div>
