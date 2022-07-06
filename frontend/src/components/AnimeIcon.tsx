@@ -4,37 +4,37 @@ import React from "react";
 
 import { AnimeType } from "~/types";
 
-export const TVAnimeIcon: React.FC<{ className?: string }> = ({ className }) => (
+export const IconTVAnime: React.FC<{ className?: string }> = ({ className }) => (
   <FontAwesomeIcon icon={faTv} className={className} fixedWidth />
 );
 
-export const MovieAnimeIcon: React.FC<{ className?: string }> = ({ className }) => (
+export const IconMovieAnime: React.FC<{ className?: string }> = ({ className }) => (
   <FontAwesomeIcon icon={faFilm} className={className} fixedWidth />
 );
 
-export const OVAAnimeIcon: React.FC<{ className?: string }> = ({ className }) => (
+export const IconOVAAnime: React.FC<{ className?: string }> = ({ className }) => (
   <FontAwesomeIcon icon={faCompactDisc} className={className} fixedWidth />
 );
 
-export const ONAAnimeIcon: React.FC<{ className?: string }> = ({ className }) => (
+export const IconONAAnime: React.FC<{ className?: string }> = ({ className }) => (
   <FontAwesomeIcon icon={faGlobe} className={className} fixedWidth />
 );
 
-export const OthersAnimeIcon: React.FC<{ className?: string }> = ({ className }) => (
+export const IconOthersAnime: React.FC<{ className?: string }> = ({ className }) => (
   <FontAwesomeIcon icon={faOtter} className={className} fixedWidth />
 );
 
 export const AnimeIcon: React.FC<{ type: AnimeType; className?: string }> = ({ type, ...props }) => {
   switch (type) {
     case "TV":
-      return TVAnimeIcon(props);
+      return IconTVAnime(props);
     case "MOVIE":
-      return MovieAnimeIcon(props);
+      return IconMovieAnime(props);
     case "OVA":
-      return OVAAnimeIcon(props);
+      return IconOVAAnime(props);
     case "ONA":
-      return ONAAnimeIcon(props);
+      return IconONAAnime(props);
     case "OTHERS":
-      return OthersAnimeIcon(props);
+      return IconOthersAnime(props);
   }
 };

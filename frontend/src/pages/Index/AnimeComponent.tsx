@@ -4,7 +4,13 @@ import { useInView } from "react-intersection-observer";
 
 import { AnimeIcon } from "~/components/AnimeIcon";
 import { AnimeSeason, AnimeType, ServiceID } from "~/types";
-import { urlAnilistAnime, urlAnilistUser, urlAnnictAnime, urlAnnictUser, urlMyAnimeListAnime } from "~/utils/idToUrl";
+import {
+  urlAnilistAnime,
+  urlAnilistUser,
+  urlAnnictAnime,
+  urlAnnictUser,
+  urlMyAnimeListAnime,
+} from "~/utils/serviceUrl";
 
 export const Thumbnail: React.FC<{ className?: string; src: string }> = ({ className, src }) => {
   const { ref, inView } = useInView({

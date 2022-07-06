@@ -1,16 +1,46 @@
 import clsx from "clsx";
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 
+import { AnimeTypeFilter } from "./AnimeTypeFilter";
 import { List } from "./List";
+import { TypeFilter } from "./types";
 import { Users } from "./Users";
-
 export const Page: React.FC = () => {
+  const [typeFilter, setTypeFilter] = useState<TypeFilter>({
+    TV: true,
+    MOVIE: true,
+    ONA: true,
+    OVA: true,
+    OTHERS: true,
+  });
+
   return (
-    <main className={clsx(["bg-gray-100"])}>
+    <main className={clsx(["bg-gray-100"], ["min-h-screen"])}>
+      <div
+        className={clsx(
+          ["sticky", "top-0"],
+          ["py-8"],
+          ["bg-gray-900"],
+          ["shadow-xl"],
+        )}
+      >
+        <div
+          className={clsx(
+            ["container"],
+            ["mx-auto"],
+          )}
+        >
+          <AnimeTypeFilter
+            handleChange={(v) => {
+              setTypeFilter(v);
+            }}
+          />
+        </div>
+      </div>
       <Users />
-      <div className={clsx(["container"], ["mx-auto"], ["py-8"])}>
-        <Suspense fallback={<h1>Loading</h1>}>
-          <List />
+      <div className={clsx(["container"], ["h-full"], ["mx-auto"], ["py-8"])}>
+        <Suspense fallback={<span>Loading</span>}>
+          <List typeFilter={typeFilter} />
         </Suspense>
       </div>
     </main>

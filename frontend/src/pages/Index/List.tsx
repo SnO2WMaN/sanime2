@@ -7,6 +7,7 @@ import { useURLParams } from "~/hooks/useURLParams";
 import { AnimeSeason, AnimeType, APIResponse, ServiceID } from "~/types";
 
 import { AnimeComponent } from "./AnimeComponent";
+import { TypeFilter } from "./types";
 
 export const isInclude = (
   p: {
@@ -29,7 +30,16 @@ export const isInclude = (
   }) != -1;
 };
 
-export const List: React.FC = () => {
+export const isVisible = ({ type }: { type: AnimeType | null }, typeFilter: TypeFilter) => {
+  if (!typeFilter.TV && type === "TV") return false;
+  if (!typeFilter.MOVIE && type === "MOVIE") return false;
+  if (!typeFilter.OVA && type === "OVA") return false;
+  if (!typeFilter.ONA && type === "ONA") return false;
+  if (!typeFilter.OTHERS && type === "OTHERS") return false;
+  return true;
+};
+
+export const List: React.FC<{ typeFilter: Record<AnimeType, boolean> }> = ({ typeFilter }) => {
   const queryUsers = useURLParams("users");
   const { data } = useSWR<APIResponse>(queryUsers && routeApiShows(queryUsers.split(",")), { suspense: true });
 
@@ -81,6 +91,7 @@ export const List: React.FC = () => {
         paused: ServiceID[];
         dropped: ServiceID[];
       };
+      visible: boolean;
     }[]
   >(
     () =>
@@ -116,13 +127,15 @@ export const List: React.FC = () => {
             users: { watched, watching, want, paused, dropped },
             score:
               (watched.length * 2 + watching.length * 1 + want.length * 0.5 - paused.length * 0.5 - dropped.length * 1),
+            visible: isVisible({ type }, typeFilter),
           });
-        }).sort((a, b) => {
+        })
+        .sort((a, b) => {
           if (0 < Math.abs(a.score - b.score)) return b.score - a.score;
           if (a.season && b.season) return b.season.year - a.season.year;
           return b.id < a.id ? 1 : -1;
         }),
-    [data, userStatuses],
+    [data, typeFilter, userStatuses],
   );
 
   return (
@@ -135,9 +148,10 @@ export const List: React.FC = () => {
       ])}
     >
       {(usersInfo && formedAnimes)
-        && formedAnimes.map(({ id, title, cover, season, type, idAniList, idAnnict, idMal, users }) => (
+        && formedAnimes.map(({ id, title, cover, season, type, idAniList, idAnnict, idMal, users, visible }) => (
           <AnimeComponent
             key={id}
+            className={clsx({ hidden: !visible })}
             title={title}
             cover={cover}
             season={season}
