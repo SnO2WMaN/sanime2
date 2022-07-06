@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 
-import { AnimeIcon } from "~/components/AnimeIcon";
+import { IconAnimeType } from "~/components/Icon";
 import { AnimeSeason, AnimeType, ServiceID } from "~/types";
 import {
   urlAnilistAnime,
@@ -48,7 +48,7 @@ export const Season: React.FC<{ className?: string; season: AnimeSeason }> = ({ 
 };
 
 export const Type: React.FC<{ className?: string; type: AnimeType }> = ({ className, type }) => {
-  return <AnimeIcon type={type} className={clsx(className, ["text-gray-500"], ["text-md"])} />;
+  return <IconAnimeType type={type} className={clsx(className, ["text-gray-500"], ["text-md"])} />;
 };
 
 export const AnimeComponent: React.FC<{

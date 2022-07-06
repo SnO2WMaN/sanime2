@@ -4,7 +4,7 @@ import React, { Suspense, useState } from "react";
 import { AnimeTypeFilter } from "./AnimeTypeFilter";
 import { List } from "./List";
 import { TypeFilter } from "./types";
-import { Users } from "./Users";
+import { UsersSelector } from "./UsersSelector";
 export const Page: React.FC = () => {
   const [typeFilter, setTypeFilter] = useState<TypeFilter>({
     TV: true,
@@ -35,9 +35,9 @@ export const Page: React.FC = () => {
               setTypeFilter(v);
             }}
           />
+          <UsersSelector className={clsx("mt-4", ["w-full"])} />
         </div>
       </div>
-      <Users />
       <div className={clsx(["container"], ["h-full"], ["mx-auto"], ["py-8"])}>
         <Suspense fallback={<span>Loading</span>}>
           <List typeFilter={typeFilter} />

@@ -1,4 +1,13 @@
-import { faCompactDisc, faFilm, faGlobe, faOtter, faTv } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCompactDisc,
+  faFilm,
+  faGlobe,
+  faOtter,
+  faPlus,
+  faRotate,
+  faTv,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
@@ -24,7 +33,7 @@ export const IconOthersAnime: React.FC<{ className?: string }> = ({ className })
   <FontAwesomeIcon icon={faOtter} className={className} fixedWidth />
 );
 
-export const AnimeIcon: React.FC<{ type: AnimeType; className?: string }> = ({ type, ...props }) => {
+export const IconAnimeType: React.FC<{ type: AnimeType; className?: string }> = ({ type, ...props }) => {
   switch (type) {
     case "TV":
       return IconTVAnime(props);
@@ -38,3 +47,15 @@ export const AnimeIcon: React.FC<{ type: AnimeType; className?: string }> = ({ t
       return IconOthersAnime(props);
   }
 };
+
+export const IconReload: React.FC<{ className?: string }> = ({ className }) => (
+  <FontAwesomeIcon icon={faRotate} className={className} fixedWidth />
+);
+
+export const IconDelete: React.FC<{ className?: string }> = ({ className }) => (
+  <FontAwesomeIcon icon={faXmark} className={className} fixedWidth />
+);
+
+export const IconAdd: React.FC<{ className?: string }> = ({ className }) => (
+  <FontAwesomeIcon icon={faPlus} className={className} fixedWidth />
+);
