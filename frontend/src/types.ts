@@ -28,7 +28,7 @@ export interface AnimeInfo {
   idMal?: number;
   idAnnict?: number;
   idAniList?: number;
-  title?: string;
+  title: string; // TODO: 「titleが無い」ことは無いだろう
   horizontalCoverURL?: string;
   verticalCoverURL?: string;
   type: AnimeType | null;

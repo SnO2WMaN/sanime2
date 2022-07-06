@@ -1,12 +1,16 @@
-import { css } from "@emotion/css";
 import clsx from "clsx";
 import React from "react";
 
 export const Thumbnail: React.FC<{ className?: string; src: string }> = ({ className, src }) => {
   return (
-    <div className={clsx(className)}>
+    <div
+      className={clsx(
+        className,
+        "bg-gray-50",
+      )}
+    >
       <img
-        className={css({ height: "100%" })}
+        className={clsx(["mx-auto"], ["h-full"])}
         src={src}
         loading="lazy"
       >
