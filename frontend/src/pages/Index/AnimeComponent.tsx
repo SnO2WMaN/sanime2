@@ -4,7 +4,7 @@ import { useInView } from "react-intersection-observer";
 
 import { AnimeIcon } from "~/components/AnimeIcon";
 import { AnimeSeason, AnimeType, ServiceID } from "~/types";
-import { urlAnilist, urlAnnict, urlMyAnimeList } from "~/utils/idToUrl";
+import { urlAnilistAnime, urlAnilistUser, urlAnnictAnime, urlAnnictUser, urlMyAnimeListAnime } from "~/utils/idToUrl";
 
 export const Thumbnail: React.FC<{ className?: string; src: string }> = ({ className, src }) => {
   const { ref, inView } = useInView({
@@ -100,7 +100,7 @@ export const AnimeComponent: React.FC<{
                   ["underline"],
                   ["text-blue-500", "visited:text-violet-500"],
                 )}
-                href={urlAnnict(idAnnict)}
+                href={urlAnnictAnime(idAnnict)}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -116,7 +116,7 @@ export const AnimeComponent: React.FC<{
                   ["underline"],
                   ["text-blue-500", "visited:text-violet-500"],
                 )}
-                href={urlAnilist(idAniList)}
+                href={urlAnilistAnime(idAniList)}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -132,7 +132,7 @@ export const AnimeComponent: React.FC<{
                   ["underline"],
                   ["text-blue-500", "visited:text-violet-500"],
                 )}
-                href={urlMyAnimeList(idMal)}
+                href={urlMyAnimeListAnime(idMal)}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -192,8 +192,8 @@ export const UserIcon: React.FC<{ className?: string; id: string; avatarUrl: str
   { id, className, avatarUrl },
 ) => {
   const url = useMemo(() => {
-    if (id.startsWith("annict:")) return `https://annict.com/@${id.substring("annict:".length)}`;
-    if (id.startsWith("anilist:")) return `https://anilist.co/user/${id.substring("anilist:".length)}`;
+    if (id.startsWith("annict:")) return urlAnnictUser(id.substring("annict:".length));
+    if (id.startsWith("anilist:")) return urlAnilistUser(id.substring("anilist:".length));
   }, [id]);
 
   if (!url) {
