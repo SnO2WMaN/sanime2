@@ -136,12 +136,22 @@ export const AnimeComponent: React.FC<{
             </li>
           )}
         </ul>
-        <ul className={clsx(["mt-2"], ["flex"], ["space-x-4"])}>
-          {0 < users.watched.length && <UsersStatus type={"WATCHED"} users={users.watched} usersInfo={usersInfo} />}
-          {0 < users.watching.length && <UsersStatus type={"WATCHING"} users={users.watching} usersInfo={usersInfo} />}
-          {0 < users.paused.length && <UsersStatus type={"PAUSED"} users={users.paused} usersInfo={usersInfo} />}
-          {0 < users.dropped.length && <UsersStatus type={"DROPPED"} users={users.dropped} usersInfo={usersInfo} />}
-          {0 < users.want.length && <UsersStatus type={"WANT"} users={users.want} usersInfo={usersInfo} />}
+        <ul className={clsx(["mt-2"], ["flex", ["flex-wrap"]])}>
+          {0 < users.watched.length && (
+            <UsersStatus className={clsx("mr-2")} type={"WATCHED"} users={users.watched} usersInfo={usersInfo} />
+          )}
+          {0 < users.watching.length && (
+            <UsersStatus className={clsx("mr-2")} type={"WATCHING"} users={users.watching} usersInfo={usersInfo} />
+          )}
+          {0 < users.want.length && (
+            <UsersStatus className={clsx("mr-2")} type={"WANT"} users={users.want} usersInfo={usersInfo} />
+          )}
+          {0 < users.paused.length && (
+            <UsersStatus className={clsx("mr-2")} type={"PAUSED"} users={users.paused} usersInfo={usersInfo} />
+          )}
+          {0 < users.dropped.length && (
+            <UsersStatus className={clsx("mr-2")} type={"DROPPED"} users={users.dropped} usersInfo={usersInfo} />
+          )}
         </ul>
       </div>
     </article>
@@ -157,7 +167,7 @@ export const UsersStatus: React.FC<{
   return (
     <li className={clsx(className, ["flex"], ["items-center"])}>
       <span className={clsx(["text-sm"], ["font-mono"], ["leading-none"])}>
-        {type}({users.length})
+        {type}({users.length}):
       </span>
       <ul className={clsx(["ml-1"], ["flex"], ["space-x-1"])}>
         {users.map((id) => {
