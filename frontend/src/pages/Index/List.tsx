@@ -64,7 +64,7 @@ export const List: React.FC = () => {
       })),
     [data],
   );
-  const formed = useMemo<
+  const formedAnimes = useMemo<
     undefined | {
       id: ServiceID;
       title: string;
@@ -87,33 +87,41 @@ export const List: React.FC = () => {
       data && userStatuses
       && Object
         .values(data.animes)
-        .map(({ id, title, idAniList, idAnnict, idMal, season, type, verticalCoverURL }) => ({
-          id,
-          title,
-          cover: verticalCoverURL || null,
-          idAniList: idAniList || null,
-          idAnnict: idAnnict || null,
-          idMal: idMal || null,
-          season,
-          type,
-          users: {
-            watched: userStatuses
-              .filter(({ status }) => isInclude(status.watched, { idAniList, idAnnict, idMal }))
-              .map(({ id }) => id),
-            watching: userStatuses
-              .filter(({ status }) => isInclude(status.watching, { idAniList, idAnnict, idMal }))
-              .map(({ id }) => id),
-            want: userStatuses
-              .filter(({ status }) => isInclude(status.want, { idAniList, idAnnict, idMal }))
-              .map(({ id }) => id),
-            paused: userStatuses
-              .filter(({ status }) => isInclude(status.paused, { idAniList, idAnnict, idMal }))
-              .map(({ id }) => id),
-            dropped: userStatuses
-              .filter(({ status }) => isInclude(status.dropped, { idAniList, idAnnict, idMal }))
-              .map(({ id }) => id),
-          },
-        })),
+        .map(({ id, title, idAniList, idAnnict, idMal, season, type, verticalCoverURL }) => {
+          const watched = userStatuses
+            .filter(({ status }) => isInclude(status.watched, { idAniList, idAnnict, idMal }))
+            .map(({ id }) => id);
+          const watching = userStatuses
+            .filter(({ status }) => isInclude(status.watching, { idAniList, idAnnict, idMal }))
+            .map(({ id }) => id);
+          const want = userStatuses
+            .filter(({ status }) => isInclude(status.want, { idAniList, idAnnict, idMal }))
+            .map(({ id }) => id);
+          const paused = userStatuses
+            .filter(({ status }) => isInclude(status.paused, { idAniList, idAnnict, idMal }))
+            .map(({ id }) => id);
+          const dropped = userStatuses
+            .filter(({ status }) => isInclude(status.dropped, { idAniList, idAnnict, idMal }))
+            .map(({ id }) => id);
+
+          return ({
+            id,
+            title,
+            cover: verticalCoverURL || null,
+            idAniList: idAniList || null,
+            idAnnict: idAnnict || null,
+            idMal: idMal || null,
+            season,
+            type,
+            users: { watched, watching, want, paused, dropped },
+            score:
+              (watched.length * 2 + watching.length * 1 + want.length * 0.5 - paused.length * 0.5 - dropped.length * 1),
+          });
+        }).sort((a, b) => {
+          if (0 < Math.abs(a.score - b.score)) return b.score - a.score;
+          if (a.season && b.season) return b.season.year - a.season.year;
+          return b.id < a.id ? 1 : -1;
+        }),
     [data, userStatuses],
   );
 
@@ -126,8 +134,8 @@ export const List: React.FC = () => {
         ["gap-y-4"],
       ])}
     >
-      {(usersInfo && formed)
-        && formed.map(({ id, title, cover, season, type, idAniList, idAnnict, idMal, users }) => (
+      {(usersInfo && formedAnimes)
+        && formedAnimes.map(({ id, title, cover, season, type, idAniList, idAnnict, idMal, users }) => (
           <AnimeComponent
             key={id}
             title={title}

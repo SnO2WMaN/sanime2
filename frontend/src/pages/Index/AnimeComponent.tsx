@@ -62,7 +62,7 @@ export const AnimeComponent: React.FC<{
     <article className={clsx(className, ["flex"], ["shadow-lg"], ["bg-white"])}>
       <div
         className={clsx(
-          ["w-32", "sm:w-36", "lg:w-48"],
+          ["w-32", "sm:w-36", "lg:w-40"],
           ["sm:h-40", "lg:h-48"],
           ["flex-shrink-0"],
         )}
@@ -169,7 +169,7 @@ export const UsersStatus: React.FC<{
       <span className={clsx(["text-sm"], ["font-mono"], ["leading-none"])}>
         {type}({users.length}):
       </span>
-      <ul className={clsx(["ml-1"], ["flex"], ["space-x-1"])}>
+      <ul className={clsx(["ml-1"], ["flex"], ["space-x-1"], ["flex-wrap"])}>
         {users.map((id) => {
           const avatarUrl = usersInfo.get(id)?.avatarUrl;
           return (
