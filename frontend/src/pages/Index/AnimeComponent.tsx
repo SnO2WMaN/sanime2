@@ -1,8 +1,8 @@
 import clsx from "clsx";
-import React from "react";
+import React, { useMemo } from "react";
 
 import { AnimeIcon } from "~/components/AnimeIcon";
-import { AnimeSeason, AnimeType } from "~/types";
+import { AnimeSeason, AnimeType, ServiceID } from "~/types";
 import { urlAnilist, urlAnnict, urlMyAnimeList } from "~/utils/idToUrl";
 
 export const Thumbnail: React.FC<{ className?: string; src: string }> = ({ className, src }) => {
@@ -49,13 +49,21 @@ export const AnimeComponent: React.FC<{
   idAniList: number | null;
   idAnnict: number | null;
   idMal: number | null;
-}> = ({ className, title, cover, season, type, idAniList, idAnnict, idMal }) => {
+  users: {
+    watched: ServiceID[];
+    watching: ServiceID[];
+    want: ServiceID[];
+    paused: ServiceID[];
+    dropped: ServiceID[];
+  };
+  usersInfo: Map<ServiceID, { avatarUrl: string | null }>;
+}> = ({ className, title, cover, season, type, idAniList, idAnnict, idMal, users, usersInfo }) => {
   return (
     <article className={clsx(className, ["flex"], ["shadow-lg"], ["bg-white"])}>
       <div
         className={clsx(
           ["w-32", "sm:w-36", "lg:w-48"],
-          ["sm:h-36", "lg:h-48"],
+          ["sm:h-40", "lg:h-48"],
           ["flex-shrink-0"],
         )}
       >
@@ -128,7 +136,64 @@ export const AnimeComponent: React.FC<{
             </li>
           )}
         </ul>
+        <ul className={clsx(["mt-2"], ["flex"], ["space-x-4"])}>
+          {0 < users.watched.length && <UsersStatus type={"WATCHED"} users={users.watched} usersInfo={usersInfo} />}
+          {0 < users.watching.length && <UsersStatus type={"WATCHING"} users={users.watching} usersInfo={usersInfo} />}
+          {0 < users.paused.length && <UsersStatus type={"PAUSED"} users={users.paused} usersInfo={usersInfo} />}
+          {0 < users.dropped.length && <UsersStatus type={"DROPPED"} users={users.dropped} usersInfo={usersInfo} />}
+          {0 < users.want.length && <UsersStatus type={"WANT"} users={users.want} usersInfo={usersInfo} />}
+        </ul>
       </div>
     </article>
+  );
+};
+
+export const UsersStatus: React.FC<{
+  className?: string;
+  type: string;
+  users: ServiceID[];
+  usersInfo: Map<ServiceID, { avatarUrl: string | null }>;
+}> = ({ className, type, usersInfo, users }) => {
+  return (
+    <li className={clsx(className, ["flex"], ["items-center"])}>
+      <span className={clsx(["text-sm"], ["font-mono"], ["leading-none"])}>
+        {type}({users.length})
+      </span>
+      <ul className={clsx(["ml-1"], ["flex"], ["space-x-1"])}>
+        {users.map((id) => {
+          const avatarUrl = usersInfo.get(id)?.avatarUrl;
+          return (
+            <li key={id}>
+              {<UserIcon avatarUrl={avatarUrl || null} className={clsx("w-6", "h-6")} id={id} />}
+            </li>
+          );
+        })}
+      </ul>
+    </li>
+  );
+};
+
+export const UserIcon: React.FC<{ className?: string; id: string; avatarUrl: string | null }> = (
+  { id, className, avatarUrl },
+) => {
+  const url = useMemo(() => {
+    if (id.startsWith("annict:")) return `https://annict.com/@${id.substring("annict:".length)}`;
+    if (id.startsWith("anilist:")) return `https://anilist.co/user/${id.substring("anilist:".length)}`;
+  }, [id]);
+
+  if (!url) {
+    return (
+      <span className={clsx(className, ["block"])}>
+        {avatarUrl && <img loading="lazy" src={avatarUrl} className={clsx(["h-fit"], ["rounded-full"])}></img>}
+        {!avatarUrl && <span>{id}</span>}
+      </span>
+    );
+  }
+
+  return (
+    <a className={clsx(className, ["block"])} href={url} target="_blank" rel="noreferrer">
+      {avatarUrl && <img loading="lazy" src={avatarUrl} className={clsx(["h-fit"], ["rounded-full"])}></img>}
+      {!avatarUrl && <span>{id}</span>}
+    </a>
   );
 };

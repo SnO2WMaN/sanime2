@@ -8,10 +8,57 @@ import { AnimeSeason, AnimeType, APIResponse, ServiceID } from "~/types";
 
 import { AnimeComponent } from "./AnimeComponent";
 
-export const List: React.FC = () => {
-  const users = useURLParams("users");
-  const { data } = useSWR<APIResponse>(users && routeApiShows(users.split(",")), { suspense: true });
+export const isInclude = (
+  p: {
+    sourceServiceID: ServiceID;
+    myAnimeListID: number | undefined;
+  }[],
+  pv: {
+    idAniList?: number;
+    idAnnict?: number;
+    idMal?: number;
+  },
+): boolean => {
+  return p.findIndex(({ myAnimeListID, sourceServiceID }) => {
+    return myAnimeListID === pv.idMal;
+  }) != -1;
+};
 
+export const List: React.FC = () => {
+  const queryUsers = useURLParams("users");
+  const { data } = useSWR<APIResponse>(queryUsers && routeApiShows(queryUsers.split(",")), { suspense: true });
+
+  const usersInfo = useMemo<
+    | undefined
+    | Map<ServiceID, { avatarUrl: string | null }>
+  >(
+    () => data ? new Map(data.users.map(({ id, avatarUrl }) => [id, { avatarUrl: avatarUrl || null }])) : undefined,
+    [data],
+  );
+  const userStatuses = useMemo(
+    () =>
+      data?.users.map(({ id, works }) => ({
+        id,
+        status: {
+          watched: works
+            .filter(({ status }) => status === "WATCHED")
+            .map(({ sourceServiceID, myAnimeListID }) => ({ sourceServiceID, myAnimeListID })),
+          watching: works
+            .filter(({ status }) => status === "WATCHING")
+            .map(({ sourceServiceID, myAnimeListID }) => ({ sourceServiceID, myAnimeListID })),
+          want: works
+            .filter(({ status }) => status === "WANT")
+            .map(({ sourceServiceID, myAnimeListID }) => ({ sourceServiceID, myAnimeListID })),
+          dropped: works
+            .filter(({ status }) => status === "DROPPED")
+            .map(({ sourceServiceID, myAnimeListID }) => ({ sourceServiceID, myAnimeListID })),
+          paused: works
+            .filter(({ status }) => status === "PAUSED")
+            .map(({ sourceServiceID, myAnimeListID }) => ({ sourceServiceID, myAnimeListID })),
+        },
+      })),
+    [data],
+  );
   const formed = useMemo<
     undefined | {
       id: ServiceID;
@@ -22,10 +69,17 @@ export const List: React.FC = () => {
       idAniList: number | null;
       idAnnict: number | null;
       idMal: number | null;
+      users: {
+        watched: ServiceID[];
+        watching: ServiceID[];
+        want: ServiceID[];
+        paused: ServiceID[];
+        dropped: ServiceID[];
+      };
     }[]
   >(
     () =>
-      data
+      data && userStatuses
       && Object
         .values(data.animes)
         .map(({ id, title, idAniList, idAnnict, idMal, season, type, verticalCoverURL }) => ({
@@ -37,8 +91,25 @@ export const List: React.FC = () => {
           idMal: idMal || null,
           season,
           type,
+          users: {
+            watched: userStatuses
+              .filter(({ status }) => isInclude(status.watched, { idAniList, idAnnict, idMal }))
+              .map(({ id }) => id),
+            watching: userStatuses
+              .filter(({ status }) => isInclude(status.watching, { idAniList, idAnnict, idMal }))
+              .map(({ id }) => id),
+            want: userStatuses
+              .filter(({ status }) => isInclude(status.want, { idAniList, idAnnict, idMal }))
+              .map(({ id }) => id),
+            paused: userStatuses
+              .filter(({ status }) => isInclude(status.paused, { idAniList, idAnnict, idMal }))
+              .map(({ id }) => id),
+            dropped: userStatuses
+              .filter(({ status }) => isInclude(status.dropped, { idAniList, idAnnict, idMal }))
+              .map(({ id }) => id),
+          },
         })),
-    [data],
+    [data, userStatuses],
   );
 
   return (
@@ -50,18 +121,21 @@ export const List: React.FC = () => {
         ["gap-y-4"],
       ])}
     >
-      {formed?.map(({ id, title, cover, season, type, idAniList, idAnnict, idMal }) => (
-        <AnimeComponent
-          key={id}
-          title={title}
-          cover={cover}
-          season={season}
-          type={type}
-          idAniList={idAniList}
-          idAnnict={idAnnict}
-          idMal={idMal}
-        />
-      ))}
+      {(usersInfo && formed)
+        && formed.map(({ id, title, cover, season, type, idAniList, idAnnict, idMal, users }) => (
+          <AnimeComponent
+            key={id}
+            title={title}
+            cover={cover}
+            season={season}
+            type={type}
+            idAniList={idAniList}
+            idAnnict={idAnnict}
+            idMal={idMal}
+            users={users}
+            usersInfo={usersInfo}
+          />
+        ))}
     </div>
   );
 };
