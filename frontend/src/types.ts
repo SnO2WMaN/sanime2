@@ -23,6 +23,11 @@ export type ServiceID =
   | `anilist:${string}` // Anilist
 ;
 
+export interface AnimeSeason {
+  year: number;
+  name: Season | null;
+}
+
 export interface AnimeInfo {
   id: ServiceID;
   idMal?: number;
@@ -32,10 +37,7 @@ export interface AnimeInfo {
   horizontalCoverURL?: string;
   verticalCoverURL?: string;
   type: AnimeType | null;
-  season: {
-    year: number;
-    name: Season | null;
-  } | null;
+  season: AnimeSeason | null;
 }
 export interface AnimeStatus {
   sourceServiceID: ServiceID;
