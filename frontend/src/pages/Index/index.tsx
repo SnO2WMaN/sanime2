@@ -17,7 +17,15 @@ export const Page: React.FC = () => {
   const [optionFilter, setOptionFilter] = useState<OptionFilter>({ hiddenOnlyWanted: true });
   return (
     <main className={clsx(["bg-slate-800"], ["min-h-screen"])}>
-      <Nav className={clsx(["sticky", "top-0"])} handleChangeTypeFilter={(tf) => setTypeFilter(tf)} />
+      <Nav
+        className={clsx(["sticky", "top-0"])}
+        handleChangeTypeFilter={(tf) => setTypeFilter(tf)}
+        typeFilter={typeFilter}
+        handleChangeSeasonFilter={(sf) => setSeasonFilter(sf)}
+        seasonFilter={seasonFilter}
+        handleChangeOptionFilter={(of) => setOptionFilter(of)}
+        optionFilter={optionFilter}
+      />
       <div className={clsx(["container"], ["h-full"], ["mx-auto"], ["py-8"])}>
         <Suspense fallback={<span>Loading</span>}>
           <AnimesList

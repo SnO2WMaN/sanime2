@@ -1,8 +1,7 @@
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { IconMovieAnime, IconONAAnime, IconOthersAnime, IconOVAAnime, IconTVAnime } from "~/components/Icon";
-import { AnimeType } from "~/types";
 
 import { TypeFilter } from "../types";
 
@@ -11,7 +10,7 @@ const CheckBox: React.FC<{
   Icon: React.FC<{ className?: string }>;
   label: string;
   checked: boolean;
-  handleChange(): void;
+  handleChange(checked: boolean): void;
 }> = (
   { className, Icon, label, checked, handleChange },
 ) => (
@@ -47,7 +46,7 @@ const CheckBox: React.FC<{
       className={clsx("hidden")}
       type={"checkbox"}
       checked={checked}
-      onChange={() => handleChange()}
+      onChange={(e) => handleChange(e.target.checked)}
     >
     </input>
     <Icon
@@ -69,20 +68,13 @@ const CheckBox: React.FC<{
   </label>
 );
 
-export const AnimeTypeFilter: React.FC<{ className?: string; handleChange(filter: TypeFilter): void }> = (
-  { className, handleChange },
+export const AnimeTypeFilter: React.FC<{
+  className?: string;
+  handleChange(filter: TypeFilter): void;
+  filter: TypeFilter;
+}> = (
+  { className, handleChange, filter },
 ) => {
-  const [filter, setFilter] = useState<Record<AnimeType, boolean>>({
-    TV: true,
-    MOVIE: true,
-    OVA: true,
-    ONA: true,
-    OTHERS: true,
-  });
-  useEffect(() => {
-    handleChange(filter);
-  }, [filter, handleChange]);
-
   return (
     <div
       className={clsx(className, ["flex"], ["space-x-2"])}
@@ -91,40 +83,40 @@ export const AnimeTypeFilter: React.FC<{ className?: string; handleChange(filter
         label="TV"
         Icon={IconTVAnime}
         checked={filter.TV}
-        handleChange={() => {
-          setFilter((prev) => ({ ...prev, TV: !prev.TV }));
+        handleChange={(b) => {
+          handleChange({ ...filter, TV: b });
         }}
       />
       <CheckBox
         label="MOVIE"
         Icon={IconMovieAnime}
         checked={filter.MOVIE}
-        handleChange={() => {
-          setFilter((prev) => ({ ...prev, MOVIE: !prev.MOVIE }));
+        handleChange={(b) => {
+          handleChange({ ...filter, MOVIE: b });
         }}
       />
       <CheckBox
         label="OVA"
         Icon={IconOVAAnime}
         checked={filter.OVA}
-        handleChange={() => {
-          setFilter((prev) => ({ ...prev, OVA: !prev.OVA }));
+        handleChange={(b) => {
+          handleChange({ ...filter, OVA: b });
         }}
       />
       <CheckBox
         label="ONA"
         Icon={IconONAAnime}
         checked={filter.ONA}
-        handleChange={() => {
-          setFilter((prev) => ({ ...prev, ONA: !prev.ONA }));
+        handleChange={(b) => {
+          handleChange({ ...filter, ONA: b });
         }}
       />
       <CheckBox
         label="その他"
         Icon={IconOthersAnime}
         checked={filter.OTHERS}
-        handleChange={() => {
-          setFilter((prev) => ({ ...prev, OTHERS: !prev.OTHERS }));
+        handleChange={(b) => {
+          handleChange({ ...filter, OTHERS: b });
         }}
       />
     </div>
