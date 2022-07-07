@@ -19,7 +19,7 @@ export const Thumbnail: React.FC<{ className?: string; src: string }> = ({ class
   });
 
   return (
-    <div className={clsx(className, "bg-gray-50")} ref={ref}>
+    <div className={clsx(className, "bg-gray-700")} ref={ref}>
       <img
         className={clsx(["mx-auto"], ["h-full"])}
         src={inView ? src : undefined}
@@ -70,7 +70,17 @@ export const ListItem: React.FC<{
   usersInfo: Map<ServiceID, { avatarUrl: string | null }>;
 }> = ({ className, title, cover, season, type, idAniList, idAnnict, idMal, users, usersInfo }) => {
   return (
-    <article className={clsx(className, ["flex"], ["shadow-lg"], ["bg-white"])}>
+    <article
+      className={clsx(
+        className,
+        ["flex"],
+        ["rounded-lg"],
+        ["overflow-hidden"],
+        ["shadow-lg", "shadow-gray-900"],
+        ["border", "border-gray-800"],
+        ["bg-gray-900"],
+      )}
+    >
       <div
         className={clsx(
           ["w-32", "sm:w-36", "lg:w-40"],
@@ -87,16 +97,11 @@ export const ListItem: React.FC<{
           ["flex-grow"],
         )}
       >
-        <div
-          className={clsx(
-            ["float-right"],
-            ["flex", ["items-center"]],
-          )}
-        >
+        <div className={clsx(["float-right"], ["flex", ["items-center"]])}>
           {season && <Season className={clsx()} season={season} />}
           {type && <Type className={clsx(["ml-2"])} type={type} />}
         </div>
-        <h2 className={clsx(["text-md"], ["font-semibold"])}>{title}</h2>
+        <h2 className={clsx(["text-md"], ["text-gray-300"], ["font-semibold"])}>{title}</h2>
         <ul className={clsx(["mt-1"], ["flex"], ["space-x-2"])}>
           {idAnnict && (
             <li>
@@ -177,7 +182,7 @@ export const UsersStatus: React.FC<{
 }> = ({ className, type, usersInfo, users }) => {
   return (
     <li className={clsx(className, ["flex"], ["items-center"])}>
-      <span className={clsx(["text-sm"], ["font-mono"], ["leading-none"])}>
+      <span className={clsx(["text-sm"], ["font-mono"], ["text-gray-400"], ["leading-none"])}>
         {type}({users.length}):
       </span>
       <ul className={clsx(["ml-1"], ["flex"], ["space-x-1"], ["flex-wrap"])}>
