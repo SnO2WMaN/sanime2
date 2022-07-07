@@ -5,3 +5,6 @@ export type SeasonFilter =
   | { type: "ALL" }
   | { type: "RECENT" }
   | { type: "SPECIFIC"; specify: { year: number; type: "ALL" | Season } };
+export type OptionFilter = {
+  hiddenOnlyWanted: boolean;
+};

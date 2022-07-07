@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { AnimeSeason, AnimeType, APIResponse, Season, ServiceID } from "~/types";
 import { isNearCurrentOrAfterSeason } from "~/utils/isNearCurrentOrAfterSeason";
 
-import { SeasonFilter, TypeFilter } from "../types";
+import { OptionFilter, SeasonFilter, TypeFilter } from "../types";
 import { UserStatuses } from "./useCalcUserStatuses";
 
 export interface FormedAnime {
@@ -30,12 +30,14 @@ export const useSortAnimes = ({
   apiData: data,
   typeFilter,
   seasonFilter,
+  optionFilter,
   userStatuses,
 }: {
   apiData: APIResponse | undefined;
   userStatuses: UserStatuses | undefined;
   typeFilter: TypeFilter;
   seasonFilter: SeasonFilter;
+  optionFilter: OptionFilter;
 }): undefined | SortedAnimes =>
   useMemo(() =>
     data && userStatuses
@@ -58,6 +60,8 @@ export const useSortAnimes = ({
           .filter(({ status }) => isInclude(status.dropped, { idAniList, idAnnict, idMal }))
           .map(({ id }) => id);
 
+        const users = { watched, watching, want, paused, dropped };
+
         return ({
           id,
           title,
@@ -67,10 +71,10 @@ export const useSortAnimes = ({
           idMal: idMal || null,
           season,
           type,
-          users: { watched, watching, want, paused, dropped },
+          users,
           score:
             (watched.length * 2 + watching.length * 1 + want.length * 0.5 - paused.length * 0.5 - dropped.length * 1),
-          visible: isVisible({ type, season }, { typeFilter, seasonFilter }),
+          visible: isVisible({ type, season, users }, { typeFilter, seasonFilter, optionFilter }),
         });
       })
       .sort((a, b) => {
@@ -84,7 +88,7 @@ export const useSortAnimes = ({
           else return 1;
         }
         return b.id < a.id ? -1 : 1;
-      }), [data, seasonFilter, typeFilter, userStatuses]);
+      }), [data, optionFilter, seasonFilter, typeFilter, userStatuses]);
 
 export const seasonOrder = (s: Season) => {
   switch (s) {
@@ -121,9 +125,29 @@ export const isInclude = (
 };
 
 export const isVisible = (
-  { type, season }: { type: AnimeType | null; season: AnimeSeason | null },
-  { typeFilter: tf, seasonFilter: sf }: { typeFilter: TypeFilter; seasonFilter: SeasonFilter },
+  { type, season, users }: Pick<FormedAnime, "users" | "season" | "type">,
+  {
+    typeFilter: tf,
+    seasonFilter: sf,
+    optionFilter: of,
+  }: {
+    typeFilter: TypeFilter;
+    seasonFilter: SeasonFilter;
+    optionFilter: OptionFilter;
+  },
 ) => {
+  if (
+    of.hiddenOnlyWanted
+    && (
+      users.watched.length === 0
+      && users.watching.length === 0
+      && users.paused.length === 0
+      && users.dropped.length === 0
+    )
+  ) {
+    return false;
+  }
+
   if (sf.type === "RECENT" && (!season || !isNearCurrentOrAfterSeason(season))) return false;
   if (
     sf.type === "SPECIFIC"

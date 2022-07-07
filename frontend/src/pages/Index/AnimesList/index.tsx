@@ -6,13 +6,18 @@ import { routeApiShows } from "~/api/routes";
 import { useURLParams } from "~/hooks/useURLParams";
 import { APIResponse, ServiceID } from "~/types";
 
-import { SeasonFilter, TypeFilter } from "../types";
+import { OptionFilter, SeasonFilter, TypeFilter } from "../types";
 import { ListItem } from "./ListItem";
 import { useCalcUserStatuses } from "./useCalcUserStatuses";
 import { useSortAnimes } from "./useSortAnimes";
 
-export const AnimesList: React.FC<{ className?: string; typeFilter: TypeFilter; seasonFilter: SeasonFilter }> = (
-  { className, typeFilter, seasonFilter },
+export const AnimesList: React.FC<{
+  className?: string;
+  typeFilter: TypeFilter;
+  seasonFilter: SeasonFilter;
+  optionFilter: OptionFilter;
+}> = (
+  { className, typeFilter, seasonFilter, optionFilter },
 ) => {
   const queryUsers = useURLParams("users");
   const { data: apiData } = useSWR<APIResponse>(queryUsers && routeApiShows(queryUsers.split(",")), {
@@ -30,7 +35,7 @@ export const AnimesList: React.FC<{ className?: string; typeFilter: TypeFilter; 
     [apiData],
   );
   const userStatuses = useCalcUserStatuses({ apiData });
-  const sortedAnimes = useSortAnimes({ apiData, typeFilter, seasonFilter, userStatuses });
+  const sortedAnimes = useSortAnimes({ apiData, typeFilter, seasonFilter, userStatuses, optionFilter });
 
   return (
     <div
