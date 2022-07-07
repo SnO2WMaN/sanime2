@@ -51,7 +51,7 @@ export const Type: React.FC<{ className?: string; type: AnimeType }> = ({ classN
   return <IconAnimeType type={type} className={clsx(className, ["text-gray-500"], ["text-md"])} />;
 };
 
-export const AnimeComponent: React.FC<{
+export const ListItem: React.FC<{
   className?: string;
   title: string;
   cover: string | null;

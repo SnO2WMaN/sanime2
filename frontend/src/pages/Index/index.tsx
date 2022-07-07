@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { Suspense, useState } from "react";
 
-import { List } from "./List";
+import { AnimesList } from "./AnimesList";
 import { Nav } from "./Nav";
 import { TypeFilter } from "./types";
 
@@ -18,7 +18,7 @@ export const Page: React.FC = () => {
       <Nav className={clsx(["sticky", "top-0"])} handleChangeTypeFilter={(tf) => setTypeFilter(tf)} />
       <div className={clsx(["container"], ["h-full"], ["mx-auto"], ["py-8"])}>
         <Suspense fallback={<span>Loading</span>}>
-          <List typeFilter={typeFilter} />
+          <AnimesList typeFilter={typeFilter} />
         </Suspense>
       </div>
     </main>
