@@ -6,7 +6,7 @@ import { Nav } from "./Nav";
 import { OptionFilter, SeasonFilter, TypeFilter } from "./types";
 
 export const Page: React.FC = () => {
-  const [seasonFilter, setSeasonFilter] = useState<SeasonFilter>({ type: "ALL" });
+  const [seasonFilter, setSeasonFilter] = useState<SeasonFilter>({ type: "UNKNOWN" });
   const [typeFilter, setTypeFilter] = useState<TypeFilter>({
     TV: true,
     MOVIE: true,

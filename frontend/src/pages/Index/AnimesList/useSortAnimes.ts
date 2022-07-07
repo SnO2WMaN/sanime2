@@ -148,6 +148,7 @@ export const isVisible = (
     return false;
   }
 
+  if (sf.type === "UNKNOWN" && !!season) return false;
   if (sf.type === "RECENT" && (!season || !isNearCurrentOrAfterSeason(season))) return false;
   if (
     sf.type === "SPECIFIC"

@@ -65,6 +65,7 @@ export const Nav: React.FC<{
             filter={optionFilter}
           />
           <AnimeSeasonFilter
+            className={clsx("mt-2")}
             handleChange={(v) => {
               handleChangeSeasonFilter(v);
             }}
