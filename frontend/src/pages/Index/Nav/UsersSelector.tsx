@@ -1,44 +1,24 @@
 import clsx from "clsx";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 
-import { IconAdd, IconDelete, IconReload } from "~/components/Icon";
+import { IconAdd, IconDelete } from "~/components/Icon";
 
 export const UsersSelector: React.FC<{ className?: string }> = ({ className }) => {
   const { search } = useLocation();
   const navigate = useNavigate();
 
   const [users, setUsers] = useState<string[]>(new URLSearchParams(search).get("users")?.split(",") || []);
-  const query = useMemo(() => new URLSearchParams({ users: users.join(",") }).toString(), [users]);
+
+  useEffect(() => {
+    const query = new URLSearchParams({ users: users.join(",") }).toString();
+    navigate(`?${query}`, { replace: true });
+  }, [navigate, users]);
 
   return (
     <div className={clsx(className, ["flex"])}>
-      <button
-        className={clsx(
-          ["w-8", "h-8"],
-          ["rounded-md"],
-          ["bg-opacity-50", "hover:bg-opacity-75"],
-          ["bg-green-700", "hover:bg-green-600"],
-          "border",
-          ["border-green-500", "hover:border-green-400"],
-          "shadow",
-          ["shadow-green-700"],
-        )}
-        onClick={() => {
-          navigate(`?${query}`);
-        }}
-      >
-        <IconReload
-          className={clsx(
-            ["m-auto"],
-            ["text-md"],
-            ["text-green-400", "group-hover:text-green-300"],
-          )}
-        />
-      </button>
       <div
         className={clsx(
-          ["ml-4"],
           ["flex", ["flex-grow"], ["items-center"], ["flex-wrap"]],
           ["space-x-2"],
         )}

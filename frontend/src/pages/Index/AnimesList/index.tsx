@@ -3,7 +3,6 @@ import React, { useMemo } from "react";
 import useSWR from "swr";
 
 import { routeApiShows } from "~/api/routes";
-import { useURLParams } from "~/hooks/useURLParams";
 import { APIResponse, ServiceID } from "~/types";
 
 import { OptionFilter, SeasonFilter, TypeFilter } from "../types";
@@ -13,16 +12,17 @@ import { useSortAnimes } from "./useSortAnimes";
 
 export const AnimesList: React.FC<{
   className?: string;
+  users: string[];
   typeFilter: TypeFilter;
   seasonFilter: SeasonFilter;
   optionFilter: OptionFilter;
 }> = (
-  { className, typeFilter, seasonFilter, optionFilter },
+  { className, users, typeFilter, seasonFilter, optionFilter },
 ) => {
-  const queryUsers = useURLParams("users");
-  const { data: apiData } = useSWR<APIResponse>(queryUsers && routeApiShows(queryUsers.split(",")), {
-    suspense: true,
-  });
+  const { data: apiData } = useSWR<APIResponse>(
+    routeApiShows(users),
+    { suspense: true },
+  );
 
   const usersInfo = useMemo<
     | undefined
