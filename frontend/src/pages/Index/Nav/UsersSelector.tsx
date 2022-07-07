@@ -185,6 +185,7 @@ export const UserInput: React.FC<{ className?: string; handleAdd(id: string): vo
           ["text-gray-400"],
         )}
         onChange={(e) => setId(e.target.value)}
+        value={id}
       >
       </input>
       <button

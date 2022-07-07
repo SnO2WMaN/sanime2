@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { IconMovieAnime, IconONAAnime, IconOthersAnime, IconOVAAnime, IconTVAnime } from "~/components/Icon";
 import { AnimeType } from "~/types";
 
-import { TypeFilter } from "./types";
+import { TypeFilter } from "../types";
 
 const CheckBox: React.FC<{
   className?: string;
