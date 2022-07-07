@@ -5,6 +5,7 @@ import {
   faOtter,
   faPlus,
   faRotate,
+  faTriangleExclamation,
   faTv,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -58,4 +59,8 @@ export const IconDelete: React.FC<{ className?: string }> = ({ className }) => (
 
 export const IconAdd: React.FC<{ className?: string }> = ({ className }) => (
   <FontAwesomeIcon icon={faPlus} className={className} fixedWidth />
+);
+
+export const IconError: React.FC<{ className?: string }> = ({ className }) => (
+  <FontAwesomeIcon icon={faTriangleExclamation} className={className} fixedWidth />
 );
