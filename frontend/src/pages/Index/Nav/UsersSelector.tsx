@@ -20,7 +20,8 @@ export const UsersSelector: React.FC<{ className?: string }> = ({ className }) =
       <div
         className={clsx(
           ["flex", ["flex-grow"], ["items-center"], ["flex-wrap"]],
-          ["space-x-2"],
+          ["gap-x-2"],
+          ["gap-y-2"],
         )}
       >
         {Array.from(users).map((user) => (

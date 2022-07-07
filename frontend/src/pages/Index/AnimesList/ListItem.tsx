@@ -152,21 +152,21 @@ export const ListItem: React.FC<{
             </li>
           )}
         </ul>
-        <ul className={clsx(["mt-2"], ["flex", ["flex-wrap"]])}>
+        <ul className={clsx(["mt-2"], ["flex", ["flex-wrap"]], ["gap-x-2"], ["gap-y-2"])}>
           {0 < users.watched.length && (
-            <UsersStatus className={clsx("mr-2")} type={"WATCHED"} users={users.watched} usersInfo={usersInfo} />
+            <UsersStatus className={clsx()} type={"WATCHED"} users={users.watched} usersInfo={usersInfo} />
           )}
           {0 < users.watching.length && (
-            <UsersStatus className={clsx("mr-2")} type={"WATCHING"} users={users.watching} usersInfo={usersInfo} />
+            <UsersStatus className={clsx()} type={"WATCHING"} users={users.watching} usersInfo={usersInfo} />
           )}
           {0 < users.want.length && (
-            <UsersStatus className={clsx("mr-2")} type={"WANT"} users={users.want} usersInfo={usersInfo} />
+            <UsersStatus className={clsx()} type={"WANT"} users={users.want} usersInfo={usersInfo} />
           )}
           {0 < users.paused.length && (
-            <UsersStatus className={clsx("mr-2")} type={"PAUSED"} users={users.paused} usersInfo={usersInfo} />
+            <UsersStatus className={clsx()} type={"PAUSED"} users={users.paused} usersInfo={usersInfo} />
           )}
           {0 < users.dropped.length && (
-            <UsersStatus className={clsx("mr-2")} type={"DROPPED"} users={users.dropped} usersInfo={usersInfo} />
+            <UsersStatus className={clsx()} type={"DROPPED"} users={users.dropped} usersInfo={usersInfo} />
           )}
         </ul>
       </div>
