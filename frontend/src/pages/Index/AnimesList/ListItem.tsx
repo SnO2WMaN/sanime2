@@ -19,7 +19,7 @@ export const Thumbnail: React.FC<{ className?: string; src: string }> = ({ class
   });
 
   return (
-    <div className={clsx(className, "bg-gray-700")} ref={ref}>
+    <div className={clsx(className, "bg-slate-700")} ref={ref}>
       <img
         className={clsx(["mx-auto"], ["h-full"])}
         src={inView ? src : undefined}
@@ -32,11 +32,11 @@ export const Thumbnail: React.FC<{ className?: string; src: string }> = ({ class
 export const Season: React.FC<{ className?: string; season: AnimeSeason }> = ({ className, season }) => {
   return (
     <span className={clsx(className, ["leading-none"])}>
-      <span className={clsx(["text-sm"], ["text-gray-500"])}>
+      <span className={clsx(["text-sm"], ["text-slate-500"])}>
         {`'${season.year.toString().slice(-2)}`}
       </span>
       {season.name && (
-        <span className={clsx(["ml-1"], ["text-sm"], ["text-gray-500"])}>
+        <span className={clsx(["ml-1"], ["text-sm"], ["text-slate-500"])}>
           {season.name === "SPRING" && "春"}
           {season.name === "SUMMER" && "夏"}
           {season.name === "AUTUMN" && "秋"}
@@ -48,7 +48,7 @@ export const Season: React.FC<{ className?: string; season: AnimeSeason }> = ({ 
 };
 
 export const Type: React.FC<{ className?: string; type: AnimeType }> = ({ className, type }) => {
-  return <IconAnimeType type={type} className={clsx(className, ["text-gray-500"], ["text-md"])} />;
+  return <IconAnimeType type={type} className={clsx(className, ["text-slate-500"], ["text-md"])} />;
 };
 
 export const ListItem: React.FC<{
@@ -76,9 +76,9 @@ export const ListItem: React.FC<{
         ["flex"],
         ["rounded-lg"],
         ["overflow-hidden"],
-        ["shadow-lg", "shadow-gray-900"],
-        ["border", "border-gray-800"],
-        ["bg-gray-900"],
+        ["shadow-lg", "shadow-slate-900"],
+        ["border", "border-slate-800"],
+        ["bg-slate-900"],
       )}
     >
       <div
@@ -101,7 +101,7 @@ export const ListItem: React.FC<{
           {season && <Season className={clsx()} season={season} />}
           {type && <Type className={clsx(["ml-2"])} type={type} />}
         </div>
-        <h2 className={clsx(["text-md"], ["text-gray-300"], ["font-semibold"])}>{title}</h2>
+        <h2 className={clsx(["text-md"], ["text-slate-300"], ["font-semibold"])}>{title}</h2>
         <ul className={clsx(["mt-1"], ["flex"], ["space-x-2"])}>
           {idAnnict && (
             <li>
@@ -182,7 +182,7 @@ export const UsersStatus: React.FC<{
 }> = ({ className, type, usersInfo, users }) => {
   return (
     <li className={clsx(className, ["flex"], ["items-center"])}>
-      <span className={clsx(["text-sm"], ["font-mono"], ["text-gray-400"], ["leading-none"])}>
+      <span className={clsx(["text-sm"], ["font-mono"], ["text-slate-400"], ["leading-none"])}>
         {type}({users.length}):
       </span>
       <ul className={clsx(["ml-1"], ["flex"], ["space-x-1"], ["flex-wrap"])}>

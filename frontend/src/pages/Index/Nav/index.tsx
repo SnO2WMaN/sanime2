@@ -14,7 +14,7 @@ export const Nav: React.FC<{
         className,
         ["sticky", "top-0"],
         ["py-8"],
-        ["bg-gray-800"],
+        ["bg-slate-800"],
         ["shadow-xl"],
       )}
     >

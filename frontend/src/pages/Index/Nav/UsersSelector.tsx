@@ -150,8 +150,8 @@ export const UserInput: React.FC<{ className?: string; handleAdd(id: string): vo
         "border",
         "shadow",
         "rounded-md",
-        ["border-gray-600", "hover:border-gray-500"],
-        ["shadow-gray-700"],
+        ["border-slate-600", "hover:border-slate-500"],
+        ["shadow-slate-700"],
         ["overflow-hidden"],
       )}
     >
@@ -159,9 +159,9 @@ export const UserInput: React.FC<{ className?: string; handleAdd(id: string): vo
         className={clsx(
           ["px-2"],
           ["py-0.5"],
-          ["bg-gray-700"],
+          ["bg-slate-700"],
           ["text-sm"],
-          ["text-gray-400"],
+          ["text-slate-400"],
         )}
         onChange={(e) => {
           setProvider(e.target.value as "anilist" | "annict");
@@ -179,10 +179,10 @@ export const UserInput: React.FC<{ className?: string; handleAdd(id: string): vo
           ["px-2"],
           ["bg-opacity-50", "hover:bg-opacity-60"],
           "border-l",
-          ["border-l-gray-500", "hover:border-l-gray-400"],
-          ["bg-gray-600", "hover:bg-gray-600"],
+          ["border-l-slate-500", "hover:border-l-slate-400"],
+          ["bg-slate-600", "hover:bg-slate-600"],
           ["text-sm"],
-          ["text-gray-400"],
+          ["text-slate-400"],
         )}
         onChange={(e) => setId(e.target.value)}
         value={id}
@@ -193,8 +193,8 @@ export const UserInput: React.FC<{ className?: string; handleAdd(id: string): vo
           ["px-2"],
           ["bg-opacity-10", "hover:bg-opacity-50"],
           "border-l",
-          ["bg-gray-600", "hover:bg-gray-500"],
-          ["border-l-gray-500", "hover:border-l-gray-400"],
+          ["bg-slate-600", "hover:bg-slate-500"],
+          ["border-l-slate-500", "hover:border-l-slate-400"],
         )}
         onClick={() => {
           if (id === "") return;
@@ -206,7 +206,7 @@ export const UserInput: React.FC<{ className?: string; handleAdd(id: string): vo
           className={clsx(
             ["m-auto"],
             ["text-md"],
-            ["text-gray-400", "group-hover:text-gray-300"],
+            ["text-slate-400", "group-hover:text-slate-300"],
           )}
         />
       </button>

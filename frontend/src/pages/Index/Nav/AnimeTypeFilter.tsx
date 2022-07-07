@@ -35,11 +35,11 @@ const CheckBox: React.FC<{
         "shadow-blue-700",
       ],
       !checked && [
-        "bg-gray-700",
-        "hover:bg-gray-600",
-        "border-gray-500",
-        "hover:border-gray-400",
-        "shadow-gray-700",
+        "bg-slate-700",
+        "hover:bg-slate-600",
+        "border-slate-500",
+        "hover:border-slate-400",
+        "shadow-slate-700",
       ],
     )}
   >
@@ -54,14 +54,14 @@ const CheckBox: React.FC<{
       className={clsx(
         ["text-xl"],
         checked && ["text-blue-400", "group-hover:text-blue-300"],
-        !checked && ["text-gray-400", "group-hover:text-gray-300"],
+        !checked && ["text-slate-400", "group-hover:text-slate-300"],
       )}
     />
     <span
       className={clsx(
         ["ml-2"],
         checked && ["text-blue-400", "group-hover:text-blue-300"],
-        !checked && ["text-gray-400", "group-hover:text-gray-300"],
+        !checked && ["text-slate-400", "group-hover:text-slate-300"],
       )}
     >
       {label}

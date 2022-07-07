@@ -14,7 +14,7 @@ export const Page: React.FC = () => {
     OTHERS: true,
   });
   return (
-    <main className={clsx(["bg-gray-800"], ["min-h-screen"])}>
+    <main className={clsx(["bg-slate-800"], ["min-h-screen"])}>
       <Nav className={clsx(["sticky", "top-0"])} handleChangeTypeFilter={(tf) => setTypeFilter(tf)} />
       <div className={clsx(["container"], ["h-full"], ["mx-auto"], ["py-8"])}>
         <Suspense fallback={<span>Loading</span>}>
