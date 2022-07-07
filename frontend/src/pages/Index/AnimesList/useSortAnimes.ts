@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 
 import { AnimeSeason, AnimeType, APIResponse, Season, ServiceID } from "~/types";
+import { isNearCurrentOrAfterSeason } from "~/utils/isNearCurrentOrAfterSeason";
 
-import { TypeFilter } from "../types";
+import { SeasonFilter, TypeFilter } from "../types";
 import { UserStatuses } from "./useCalcUserStatuses";
 
 export interface FormedAnime {
@@ -28,11 +29,13 @@ export type SortedAnimes = FormedAnime[];
 export const useSortAnimes = ({
   apiData: data,
   typeFilter,
+  seasonFilter,
   userStatuses,
 }: {
   apiData: APIResponse | undefined;
   userStatuses: UserStatuses | undefined;
-  typeFilter: Record<AnimeType, boolean>;
+  typeFilter: TypeFilter;
+  seasonFilter: SeasonFilter;
 }): undefined | SortedAnimes =>
   useMemo(() =>
     data && userStatuses
@@ -67,7 +70,7 @@ export const useSortAnimes = ({
           users: { watched, watching, want, paused, dropped },
           score:
             (watched.length * 2 + watching.length * 1 + want.length * 0.5 - paused.length * 0.5 - dropped.length * 1),
-          visible: isVisible({ type }, typeFilter),
+          visible: isVisible({ type, season }, { typeFilter, seasonFilter }),
         });
       })
       .sort((a, b) => {
@@ -81,7 +84,7 @@ export const useSortAnimes = ({
           else return 1;
         }
         return b.id < a.id ? -1 : 1;
-      }), [data, typeFilter, userStatuses]);
+      }), [data, seasonFilter, typeFilter, userStatuses]);
 
 export const seasonOrder = (s: Season) => {
   switch (s) {
@@ -117,11 +120,25 @@ export const isInclude = (
   }) != -1;
 };
 
-export const isVisible = ({ type }: { type: AnimeType | null }, typeFilter: TypeFilter) => {
-  if (!typeFilter.TV && type === "TV") return false;
-  if (!typeFilter.MOVIE && type === "MOVIE") return false;
-  if (!typeFilter.OVA && type === "OVA") return false;
-  if (!typeFilter.ONA && type === "ONA") return false;
-  if (!typeFilter.OTHERS && type === "OTHERS") return false;
+export const isVisible = (
+  { type, season }: { type: AnimeType | null; season: AnimeSeason | null },
+  { typeFilter: tf, seasonFilter: sf }: { typeFilter: TypeFilter; seasonFilter: SeasonFilter },
+) => {
+  if (sf.type === "RECENT" && (!season || !isNearCurrentOrAfterSeason(season))) return false;
+  if (
+    sf.type === "SPECIFIC"
+    && (
+      !season || season.year !== sf.specify.year
+      || (sf.specify.type !== "ALL" && (!season.name || season.name !== sf.specify.type))
+    )
+  ) {
+    return false;
+  }
+
+  if (!tf.TV && type === "TV") return false;
+  if (!tf.MOVIE && type === "MOVIE") return false;
+  if (!tf.OVA && type === "OVA") return false;
+  if (!tf.ONA && type === "ONA") return false;
+  if (!tf.OTHERS && type === "OTHERS") return false;
   return true;
 };

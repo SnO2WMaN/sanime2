@@ -4,13 +4,16 @@ import useSWR from "swr";
 
 import { routeApiShows } from "~/api/routes";
 import { useURLParams } from "~/hooks/useURLParams";
-import { AnimeType, APIResponse, ServiceID } from "~/types";
+import { APIResponse, ServiceID } from "~/types";
 
+import { SeasonFilter, TypeFilter } from "../types";
 import { ListItem } from "./ListItem";
 import { useCalcUserStatuses } from "./useCalcUserStatuses";
 import { useSortAnimes } from "./useSortAnimes";
 
-export const AnimesList: React.FC<{ typeFilter: Record<AnimeType, boolean> }> = ({ typeFilter }) => {
+export const AnimesList: React.FC<{ className?: string; typeFilter: TypeFilter; seasonFilter: SeasonFilter }> = (
+  { className, typeFilter, seasonFilter },
+) => {
   const queryUsers = useURLParams("users");
   const { data: apiData } = useSWR<APIResponse>(queryUsers && routeApiShows(queryUsers.split(",")), {
     suspense: true,
@@ -27,11 +30,11 @@ export const AnimesList: React.FC<{ typeFilter: Record<AnimeType, boolean> }> = 
     [apiData],
   );
   const userStatuses = useCalcUserStatuses({ apiData });
-  const sortedAnimes = useSortAnimes({ apiData, typeFilter, userStatuses });
+  const sortedAnimes = useSortAnimes({ apiData, typeFilter, seasonFilter, userStatuses });
 
   return (
     <div
-      className={clsx([
+      className={clsx(className, [
         "grid",
         ["grid-cols-1", "lg:grid-cols-2", "2xl:grid-cols-3"],
         ["gap-x-4"],
