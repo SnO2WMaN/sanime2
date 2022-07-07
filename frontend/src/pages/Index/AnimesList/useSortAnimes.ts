@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { AnimeSeason, AnimeType, APIResponse, ServiceID } from "~/types";
+import { AnimeSeason, AnimeType, APIResponse, Season, ServiceID } from "~/types";
 
 import { TypeFilter } from "../types";
 import { UserStatuses } from "./useCalcUserStatuses";
@@ -75,10 +75,26 @@ export const useSortAnimes = ({
           return b.score - a.score;
         }
         if (a.season && b.season) {
-          return b.season.year - a.season.year;
+          if (a.season.year != b.season.year) return b.season.year - a.season.year;
+          else if (a.season.name && b.season.name) return seasonOrder(b.season.name) - seasonOrder(a.season.name);
+          else if (a.season.name && !b.season.name) return -1;
+          else return 1;
         }
-        return b.id < a.id ? 1 : -1;
+        return b.id < a.id ? -1 : 1;
       }), [data, typeFilter, userStatuses]);
+
+export const seasonOrder = (s: Season) => {
+  switch (s) {
+    case "WINTER":
+      return 1;
+    case "SPRING":
+      return 2;
+    case "SUMMER":
+      return 3;
+    case "AUTUMN":
+      return 4;
+  }
+};
 
 export const isInclude = (
   p: {
