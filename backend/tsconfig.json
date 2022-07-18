@@ -1,22 +1,3 @@
 {
-  "extends": "@tsconfig/node18/tsconfig.json",
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "outDir": "dist",
-    "baseUrl": "./",
-    "paths": {
-      "~/*": [
-        "./src/*"
-      ],
-      "~~/*": [
-        "./*"
-      ]
-    }
-  },
-  "ts-node": {
-    "transpileOnly": true,
-    "transpiler": "ts-node/transpilers/swc"
-  }
+  "extends": "@tsconfig/node16/tsconfig.json"
 }

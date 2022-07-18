@@ -1,9 +1,9 @@
 import got, { HTTPError } from "got";
 import { z } from "zod";
 
-import { redis } from "../../redis.js";
-import { AnimeInfo, AnimeType, Season } from "../../type.js";
-import { isNotNull } from "../../utils/is-not-null.js";
+import { redis } from "../../redis";
+import { AnimeInfo, AnimeType, Season } from "../../type";
+import { isNotNull } from "../../utils/is-not-null";
 
 const anilistFormat = [
   "TV",
@@ -144,7 +144,7 @@ export async function fetchAniListAnimes(
     responseType: "json",
     throwHttpErrors: false,
   });
-  if (!res.ok && res.statusCode !== 404) {
+  if (!res.complete && res.statusCode !== 404) {
     if (res.statusCode === 429) {
       // eslint-disable-next-line no-promise-executor-return
       await new Promise<void>(resolve => setTimeout(resolve, 2000));

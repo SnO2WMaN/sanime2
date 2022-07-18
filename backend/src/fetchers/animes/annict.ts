@@ -1,9 +1,9 @@
 import got from "got";
 import { z } from "zod";
 
-import { redis } from "../../redis.js";
-import { AnimeInfo, AnimeType } from "../../type.js";
-import { isNotNull } from "../../utils/is-not-null.js";
+import { redis } from "../../redis";
+import { AnimeInfo, AnimeType } from "../../type";
+import { isNotNull } from "../../utils/is-not-null";
 
 const annictMedia = ["TV", "OVA", "MOVIE", "WEB", "OTHER"] as const;
 

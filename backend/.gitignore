@@ -3,3 +3,6 @@ node_modules
 
 # log
 .pnpm-debug.log
+
+# Vercel
+.vercel

@@ -5,6 +5,9 @@ result/
 # VSCode
 *.code-workspace
 
+# Vercel
+.vercel
+
 # msw
 public/mockServiceWorker.js
 
