@@ -46,7 +46,7 @@ export const Page: React.FC = () => {
   const queryUsers = useURLParams("users");
   const users = useMemo(() => queryUsers?.split(","), [queryUsers]);
 
-  const [seasonFilter, setSeasonFilter] = useState<SeasonFilter>({ type: "UNKNOWN" });
+  const [seasonFilter, setSeasonFilter] = useState<SeasonFilter>({ type: "ALL" });
   const [typeFilter, setTypeFilter] = useState<TypeFilter>({
     TV: true,
     MOVIE: true,
