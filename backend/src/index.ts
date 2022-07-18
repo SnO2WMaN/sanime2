@@ -1,44 +1,16 @@
-import cors from "@koa/cors";
-import Router from "@koa/router";
-import Koa from "koa";
-
-import { fetchAniListAnimes } from "./fetchers/animes/anilist.js";
-import { fetchAnnictAnimes } from "./fetchers/animes/annict.js";
-import { fetchAniListWatches } from "./fetchers/watchlists/anilist.js";
-import { fetchAnnictWatches } from "./fetchers/watchlists/annict.js";
-import { AnimeInfo, malIdIfPossible, ServiceID } from "./type.js";
-import { isNotNull } from "./utils/is-not-null.js";
-
-const app = new Koa();
-const router = new Router();
+import { fetchAniListAnimes } from "./fetchers/animes/anilist";
+import { fetchAnnictAnimes } from "./fetchers/animes/annict";
+import { fetchAniListWatches } from "./fetchers/watchlists/anilist";
+import { fetchAnnictWatches } from "./fetchers/watchlists/annict";
+import { AnimeInfo, malIdIfPossible, ServiceID, UserAnimeStatus } from "./type";
+import { isNotNull } from "./utils/is-not-null";
 
 export const isValidAnilistId = (id: string) => /anilist:[a-zA-Z0-9_-]{1,50}/.test(id);
 export const isValidAnnictId = (id: string) => /annict:[a-zA-Z0-9_-]{1,50}/.test(id);
 
-router.get("/api/shows", async ctx => {
-  let userIds = ctx.query.users;
-  if (!userIds) {
-    ctx.status = 400;
-    ctx.body = "must users";
-    return;
-  } else if (typeof userIds === "string") {
-    userIds = userIds.split(",");
-  }
-
-  if (userIds.length > 20) {
-    ctx.status = 422;
-    ctx.body = "Too many users";
-    return;
-  }
-
-  for (const userId of userIds) {
-    if (!isValidAnilistId(userId) && !isValidAnnictId(userId)) {
-      ctx.status = 422;
-      ctx.body = "Invalid user id";
-      return;
-    }
-  }
-
+export const fetchEm = async (
+  userIds: string[],
+): Promise<{ users: UserAnimeStatus[]; animes: Record<string, AnimeInfo> }> => {
   const annictUserNames = userIds
     .filter(u => u.startsWith("annict:"))
     .map(a => a.slice("annict:".length));
@@ -125,28 +97,19 @@ router.get("/api/shows", async ctx => {
     needsToFetch.delete(work.id);
   }
 
-  if (needsToFetch.size > 0) {
-    console.error(needsToFetch);
-    ctx.status = 500;
-    ctx.body = `Internal Server Error\n\nFailed to fetch some animes info:\n${
-      Array.from(
-        needsToFetch,
-      ).join("\n")
-    }`;
-    return;
-  }
+  // if (needsToFetch.size > 0) {
+  //   console.error(needsToFetch);
+  //   ctx.status = 500;
+  //   ctx.body = `Internal Server Error\n\nFailed to fetch some animes info:\n${
+  //     Array.from(
+  //       needsToFetch,
+  //     ).join("\n")
+  //   }`;
+  //   return;
+  // }
 
-  ctx.body = {
+  return {
     users,
     animes: Object.fromEntries(worksMap.entries()),
   };
-});
-
-app
-  .use(cors())
-  .use(router.routes())
-  .use(router.allowedMethods());
-
-app.listen(4000, () => {
-  console.log("Listen on http://localhost:4000");
-});
+};

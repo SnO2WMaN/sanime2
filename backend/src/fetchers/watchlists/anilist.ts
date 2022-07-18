@@ -1,9 +1,9 @@
 import got from "got";
 import { z } from "zod";
 
-import { redis } from "../../redis.js";
-import { UserAnimeStatus, WatchStatus } from "../../type.js";
-import { isNotNull } from "../../utils/is-not-null.js";
+import { redis } from "../../redis";
+import { UserAnimeStatus, WatchStatus } from "../../type";
+import { isNotNull } from "../../utils/is-not-null";
 
 const mlcFragment = `fragment mlc on MediaListCollection {
     user {
