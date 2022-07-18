@@ -1,5 +1,5 @@
 # pnpm installed
-FROM node:18-alpine as pnpm-installed
+FROM node:16-alpine as pnpm-installed
 WORKDIR /app
 
 RUN wget -qO- https://unpkg.com/@pnpm/self-installer | node

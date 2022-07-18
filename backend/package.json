@@ -7,7 +7,7 @@
     "build": "tsc"
   },
   "engines": {
-    "node": "^18"
+    "node": "^16"
   },
   "dependencies": {
     "@koa/cors": "3.3.0",

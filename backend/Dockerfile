@@ -1,5 +1,5 @@
 # pnpm installed
-FROM node:18-alpine as pnpm-installed
+FROM node:16-alpine as pnpm-installed
 WORKDIR /app
 
 RUN wget -qO- https://unpkg.com/@pnpm/self-installer | node
@@ -20,7 +20,7 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --prod
 
 # runner
-FROM gcr.io/distroless/nodejs:18
+FROM gcr.io/distroless/nodejs:16
 
 EXPOSE 4000
 

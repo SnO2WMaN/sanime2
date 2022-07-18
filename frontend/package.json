@@ -10,6 +10,9 @@
     "lint:eslint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lintfix:eslint": "npm run lint:eslint --fix --cache"
   },
+  "engines": {
+    "node": "^16"
+  },
   "msw": {
     "workerDirectory": "public"
   },

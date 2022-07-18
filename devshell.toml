@@ -2,7 +2,7 @@
 packages = [
   "alejandra",
   "dprint",
-  "nodejs-18_x",
+  "nodejs-16_x",
   "nodePackages.pnpm",
 ]
 
