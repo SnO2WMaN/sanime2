@@ -1,6 +1,9 @@
-.env
 .direnv
 result/
+
+# env
+.env
+.env.*.local
 
 # dependency
 node_modules/
@@ -16,3 +19,7 @@ dist/
 
 # VSCode
 *.code-workspace
+.vercel
+
+# MSW
+public/mockServiceWorker.js
