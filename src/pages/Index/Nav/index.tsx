@@ -29,16 +29,7 @@ export const Nav: React.FC<{
   },
 ) => {
   return (
-    <nav
-      className={clsx(
-        className,
-        ["sticky", "top-0"],
-        ["px-8"],
-        ["py-8"],
-        ["bg-slate-800"],
-        ["shadow-xl"],
-      )}
-    >
+    <nav className={clsx(className, ["px-8"], ["py-8"], ["bg-slate-800"], ["shadow-xl"])}>
       <div
         className={clsx(
           ["container"],
