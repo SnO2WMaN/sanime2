@@ -19,8 +19,8 @@ const CheckBox: React.FC<{
       className,
       "block",
       "group",
-      ["px-4"],
-      ["py-2"],
+      ["px-4", "md:px-4"],
+      ["py-2", "md:py-2"],
       ["shadow"],
       ["rounded-md"],
       ["select-none"],
@@ -51,7 +51,7 @@ const CheckBox: React.FC<{
     </input>
     <Icon
       className={clsx(
-        ["text-xl"],
+        ["text-sm", "md:text-xl"],
         checked && ["text-blue-400", "group-hover:text-blue-300"],
         !checked && ["text-slate-400", "group-hover:text-slate-300"],
       )}
@@ -59,6 +59,7 @@ const CheckBox: React.FC<{
     <span
       className={clsx(
         ["ml-2"],
+        ["text-sm", "md:text-xl"],
         checked && ["text-blue-400", "group-hover:text-blue-300"],
         !checked && ["text-slate-400", "group-hover:text-slate-300"],
       )}
@@ -77,7 +78,18 @@ export const AnimeTypeFilter: React.FC<{
 ) => {
   return (
     <div
-      className={clsx(className, ["flex"], ["space-x-2"])}
+      className={clsx(
+        className,
+        [
+          "grid",
+          ["grid-cols-2"],
+        ],
+        [
+          "md:flex",
+        ],
+        ["gap-x-2"],
+        ["gap-y-2"],
+      )}
     >
       <CheckBox
         label="TV"

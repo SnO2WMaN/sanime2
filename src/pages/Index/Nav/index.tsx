@@ -4,7 +4,6 @@ import { OptionFilter, SeasonFilter, TypeFilter } from "../types";
 import { AnimeOptionFilter } from "./AnimeOptionFilter";
 import { AnimeSeasonFilter } from "./AnimeSeasonFilter";
 import { AnimeTypeFilter } from "./AnimeTypeFilter";
-import { UsersSelector } from "./UsersSelector";
 
 export const Nav: React.FC<{
   className?: string;
@@ -32,9 +31,8 @@ export const Nav: React.FC<{
     <nav
       className={clsx(
         className,
-        ["sticky", "top-0"],
-        ["px-8"],
-        ["py-8"],
+        ["px-6", "sm:px-8"],
+        ["py-8", "sm:py-8"],
         ["bg-slate-800"],
         ["shadow-xl"],
       )}
@@ -44,20 +42,37 @@ export const Nav: React.FC<{
           ["container"],
           ["mx-auto"],
           [
-            "flex",
+            "grid",
+            ["gap-x-2"],
+            ["gap-y-2"],
           ],
         )}
       >
-        <div className={clsx("flex-grow", ["flex", "flex-col"])}>
-          <AnimeTypeFilter
-            handleChange={(v) => {
-              handleChangeTypeFilter(v);
-            }}
-            filter={typeFilter}
-          />
-          <UsersSelector className={clsx("mt-4", ["w-full"])} />
-        </div>
-        <div className={clsx("flex-shrink-0", ["flex", "flex-col"])}>
+        <AnimeTypeFilter
+          className={clsx(
+            ["row-start-1"],
+            ["col-start-1"],
+          )}
+          handleChange={(v) => {
+            handleChangeTypeFilter(v);
+          }}
+          filter={typeFilter}
+        />
+        {
+          /*        <UsersSelector
+          className={clsx(
+            ["md:row-start-2"],
+            ["w-full"],
+          )}
+          /> */
+        }
+        <div
+          className={clsx(
+            ["row-start-2"],
+            ["md:row-span-2"],
+            ["flex", "flex-col"],
+          )}
+        >
           <AnimeOptionFilter
             handleChange={(v) => {
               handleChangeOptionFilter(v);

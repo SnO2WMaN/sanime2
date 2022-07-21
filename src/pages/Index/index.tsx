@@ -58,7 +58,13 @@ export const Page: React.FC = () => {
   return (
     <main className={clsx(["bg-slate-800"], ["min-h-screen"])}>
       <Nav
-        className={clsx(["sticky", "top-0"])}
+        className={clsx(
+          ["fixed", "md:sticky"],
+          ["top-0"],
+          ["left-0"],
+          ["w-auto", "md:w-full"],
+          ["h-screen", "md:h-auto"],
+        )}
         handleChangeTypeFilter={(tf) => setTypeFilter(tf)}
         typeFilter={typeFilter}
         handleChangeSeasonFilter={(sf) => setSeasonFilter(sf)}
